@@ -1,0 +1,54 @@
+openapi: 3.0.0
+info:
+  title: Menu Development API
+  version: 1.0.0
+  description: An API for developing personalized menu items based on customer preferences and market trends.
+servers:
+  - url: http://localhost:8000
+paths:
+  /generate-menu:
+    post:
+      summary: Generate a personalized menu
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                customer_diagnosis:
+                  type: string
+                  description: Customer diagnosis results influencing menu choices.
+                menu_count:
+                  type: integer
+                  description: Number of menus to generate (1-3).
+                  example: 3
+      responses:
+        '200':
+          description: A JSON object containing the generated menu details.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  menus:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        product_name:
+                          type: string
+                        description:
+                          type: string
+                        recipe:
+                          type: string
+                        ingredients_cost:
+                          type: number
+                        price:
+                          type: number
+                        image_url:
+                          type: string
+        '400':
+          description: Invalid input or parameters
+        '500':
+          description: Internal server error
